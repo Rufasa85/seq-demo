@@ -1,6 +1,6 @@
 const Kitten = require("./kitten");
-const User = require("./User");
-const Toy = require("./Toy")
+const User = require("./user");
+const Toy = require("./toy")
 
 Kitten.belongsTo(User);
 User.hasMany(Kitten);
