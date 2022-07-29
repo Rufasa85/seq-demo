@@ -1,11 +1,14 @@
 const express = require('express');
 const bcrypt = require("bcrypt");
 const router = express.Router();
-const {User,Kitten} = require('../models');
+const {User,Kitten, Toy} = require('../models');
 
-router.get("/",(req,res)=>{
-    User.findAll({
-        include:[Kitten]
+router.get("/",async (req,res)=>{
+    await User.findAll({
+        include:[{
+            model:Kitten,
+            include:[Toy]
+        }]
     }).then(data=>{
         res.json(data)
     }).catch(err=>{
