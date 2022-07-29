@@ -10,11 +10,12 @@ const PORT = process.env.PORT || 3001;
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const Kitten = require("./models/kitten.js")
+const User = require("./models/User.js")
 const allRoutes = require("./controllers")
 
 app.use(allRoutes);
 
 // Connect to the database before starting the Express.js server
-sequelize.sync({force:true}).then(() => {
+sequelize.sync({force:false}).then(() => {
   app.listen(PORT, () => console.log('Now listening'));
 });
