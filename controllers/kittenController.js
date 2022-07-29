@@ -1,10 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const Kitten = require('../models/kitten');
+const {Kitten,Toy,User} = require('../models');
 
 router.get("/",async (req,res)=>{
     try {
-        const kittens = await Kitten.findAll()
+        const kittens = await Kitten.findAll({
+            include:[Toy,User]
+        })
         res.status(200).json(kittens)
     } catch (err) {
         res.status(500).json({
@@ -20,7 +22,8 @@ router.post("/",async (req,res)=>{
             name:req.body.name,
             color:req.body.color,
             isCute:req.body.isCute,
-            nickname:req.body.nickname
+            nickname:req.body.nickname,
+            UserId:req.body.UserId
         })
         res.status(201).json(newKitten)
     }catch(err){
@@ -31,6 +34,7 @@ router.post("/",async (req,res)=>{
         })
     }
 })
+
 
 router.get("/:id",(req,res)=>{
     Kitten.findByPk(req.params.id).then(kitten=>{

@@ -9,8 +9,6 @@ const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-const Kitten = require("./models/kitten.js")
-const User = require("./models/User.js")
 const allRoutes = require("./controllers")
 
 app.use(allRoutes);

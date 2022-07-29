@@ -1,9 +1,12 @@
 const express = require('express');
+const bcrypt = require("bcrypt");
 const router = express.Router();
-const User = require('../models/User');
+const {User,Kitten} = require('../models');
 
 router.get("/",(req,res)=>{
-    User.findAll().then(data=>{
+    User.findAll({
+        include:[Kitten]
+    }).then(data=>{
         res.json(data)
     }).catch(err=>{
         res.status(500).json({msg:"oh noes! error!",err})
@@ -29,7 +32,7 @@ router.post("/login",(req,res)=>{
                 msg:"invalid login credentials"
             })
         }
-        if(foundUser.password!==req.body.password){
+        if(!bcrypt.compareSync(req.body.password,foundUser.password)){
             return res.status(401).json({
                 msg:"invalid login credentials"
             })
